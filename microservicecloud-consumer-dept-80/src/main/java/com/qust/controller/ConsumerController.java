@@ -14,7 +14,7 @@ public class ConsumerController {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String REST_URL_PREFIX = "http://localhost:8001/";
+    private static final String REST_URL_PREFIX = "http://microservicecloud-dept";
 
     @RequestMapping("/consumer/dept/add")
     public boolean add(Dept dept){
@@ -29,5 +29,11 @@ public class ConsumerController {
     @RequestMapping("/consumer/dept/list")
     public List<Dept> list(){
         return restTemplate.getForObject(REST_URL_PREFIX+"/dept/list",List.class);
+    }
+    // 测试@EnableDiscoveryClient,消费端可以调用服务发现
+    @RequestMapping(value = "/consumer/dept/discovery")
+    public Object discovery()
+    {
+        return restTemplate.getForObject(REST_URL_PREFIX + "/dept/discovery", Object.class);
     }
 }
